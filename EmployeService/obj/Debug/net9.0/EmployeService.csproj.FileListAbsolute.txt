@@ -334,3 +334,4 @@ c:\Users\o.elkairi\Downloads\Microservices\EmployeService\obj\Debug\net9.0\refin
 c:\Users\o.elkairi\Downloads\Microservices\EmployeService\obj\Debug\net9.0\EmployeService.pdb
 c:\Users\o.elkairi\Downloads\Microservices\EmployeService\obj\Debug\net9.0\EmployeService.genruntimeconfig.cache
 c:\Users\o.elkairi\Downloads\Microservices\EmployeService\obj\Debug\net9.0\ref\EmployeService.dll
+c:\Users\o.elkairi\Downloads\Microservices\EmployeService\obj\Debug\net9.0\EmployeService.sourcelink.json

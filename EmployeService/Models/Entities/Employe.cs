@@ -35,8 +35,7 @@ public class Employee
     public string Position { get; set; } = string.Empty;
 
     [Column("IsVerified")]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public bool IsVerified { get; set; } = false; // BIT DEFAULT 0
+    public bool IsVerified { get; set; } = false;
 
     [Column("AccountCreationToken")]
     public string? AccountCreationToken { get; set; }
