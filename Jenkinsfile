@@ -80,14 +80,12 @@ pipeline {
             parallel {
                 stage('Stop DepartementService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%DEPT_POOL%\' } catch { Write-Host \'Pool %DEPT_POOL% not found - skipping stop\' }"'
-                        bat 'timeout /t 3 /nobreak >nul'
+                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%DEPT_POOL%\'; Start-Sleep -Seconds 3 } catch { Write-Host \'Pool %DEPT_POOL% not found - skipping stop\' }"'
                     }
                 }
                 stage('Stop EmployeService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%EMP_POOL%\' } catch { Write-Host \'Pool %EMP_POOL% not found - skipping stop\' }"'
-                        bat 'timeout /t 3 /nobreak >nul'
+                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%EMP_POOL%\'; Start-Sleep -Seconds 3 } catch { Write-Host \'Pool %EMP_POOL% not found - skipping stop\' }"'
                     }
                 }
             }
