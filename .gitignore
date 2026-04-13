@@ -1,0 +1,17 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+
+## NuGet
+*.nupkg
+packages/
+!**/packages/repositories.config
+.nuget/
+
+## Publish output
+publish/
+TestResults/

@@ -34,11 +34,13 @@ pipeline {
                 stage('Build DepartementService') {
                     steps {
                         bat "dotnet build %DEPT_SERVICE%\\%DEPT_SERVICE%.csproj -c Release --no-restore"
+                        bat "dotnet build %DEPT_TESTS%\\%DEPT_TESTS%.csproj -c Release --no-restore"
                     }
                 }
                 stage('Build EmployeService') {
                     steps {
                         bat "dotnet build %EMP_SERVICE%\\%EMP_SERVICE%.csproj -c Release --no-restore"
+                        bat "dotnet build %EMP_TESTS%\\%EMP_TESTS%.csproj -c Release --no-restore"
                     }
                 }
             }
