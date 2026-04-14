@@ -9,7 +9,7 @@ pipeline {
         DEPLOY_ROOT  = "C:\\inetpub\\wwwroot"
         DEPT_SERVICE = "DepartementService"
         DEPT_TESTS   = "DepartementService.Tests"
-        EMP_SERVICE  = "EmployeServices"
+        EMP_SERVICE  = "EmployeService"
         EMP_TESTS    = "EmployeService.Tests"
         DEPT_POOL    = "DepartementServicePool"
         EMP_POOL     = "EmployeServicePool"
