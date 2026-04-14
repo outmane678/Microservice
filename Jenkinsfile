@@ -9,8 +9,10 @@ pipeline {
         DEPLOY_ROOT  = "C:\\inetpub\\wwwroot"
         DEPT_SERVICE = "DepartementService"
         DEPT_TESTS   = "DepartementService.Tests"
+        DEPT_DEPLOY  = "DepartementService"
         EMP_SERVICE  = "EmployeService"
         EMP_TESTS    = "EmployeService.Tests"
+        EMP_DEPLOY   = "EmployeServices"
         DEPT_POOL    = "DepartementServicePool"
         EMP_POOL     = "EmployeServicePool"
     }
@@ -98,7 +100,7 @@ pipeline {
                 stage('Deploy DepartementService') {
                     steps {
                         bat """
-                            robocopy publish\\%DEPT_SERVICE% %DEPLOY_ROOT%\\%DEPT_SERVICE% /MIR /R:3 /W:5
+                            robocopy publish\\%DEPT_SERVICE% %DEPLOY_ROOT%\\%DEPT_DEPLOY% /MIR /R:3 /W:5
                             if %ERRORLEVEL% LEQ 7 exit /b 0
                         """
                     }
@@ -106,7 +108,7 @@ pipeline {
                 stage('Deploy EmployeService') {
                     steps {
                         bat """
-                            robocopy publish\\%EMP_SERVICE% %DEPLOY_ROOT%\\%EMP_SERVICE% /MIR /R:3 /W:5
+                            robocopy publish\\%EMP_SERVICE% %DEPLOY_ROOT%\\%EMP_DEPLOY% /MIR /R:3 /W:5
                             if %ERRORLEVEL% LEQ 7 exit /b 0
                         """
                     }
