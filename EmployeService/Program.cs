@@ -42,7 +42,8 @@ builder.Services.AddScoped<IEmailSender, EmailService>();
 builder.Services.AddRefitClient<IDepartmentAPI>()
     .ConfigureHttpClient(c =>
     {
-        c.BaseAddress = new Uri("http://localhost:5175"); // Port du service département
+        var deptUrl = builder.Configuration["DepartmentServiceUrl"] ?? "http://localhost:5175";
+        c.BaseAddress = new Uri(deptUrl);
         c.Timeout = TimeSpan.FromSeconds(30);
         c.DefaultRequestHeaders.Add("Accept", "application/json");
     });
@@ -60,7 +61,10 @@ if (enableSwagger)
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 app.MapControllers();
 
 var summaries = new[]
