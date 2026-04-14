@@ -80,13 +80,13 @@ pipeline {
             parallel {
                 stage('Stop DepartementService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%DEPT_POOL%\' -ErrorAction Stop } catch { Write-Host \'Pool %DEPT_POOL% - skipping stop: $($_.Exception.Message)\' }"'
+                        bat 'powershell -Command "$ErrorActionPreference=\'SilentlyContinue\'; Import-Module WebAdministration; Stop-WebAppPool -Name \'%DEPT_POOL%\'; exit 0"'
                         bat 'ping -n 4 127.0.0.1 >nul'
                     }
                 }
                 stage('Stop EmployeService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%EMP_POOL%\' -ErrorAction Stop } catch { Write-Host \'Pool %EMP_POOL% - skipping stop: $($_.Exception.Message)\' }"'
+                        bat 'powershell -Command "$ErrorActionPreference=\'SilentlyContinue\'; Import-Module WebAdministration; Stop-WebAppPool -Name \'%EMP_POOL%\'; exit 0"'
                         bat 'ping -n 4 127.0.0.1 >nul'
                     }
                 }
@@ -118,12 +118,12 @@ pipeline {
             parallel {
                 stage('Start DepartementService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; if (-not (Test-Path \"IIS:\\AppPools\\%DEPT_POOL%\")) { New-WebAppPool -Name \'%DEPT_POOL%\'; Set-ItemProperty \"IIS:\\AppPools\\%DEPT_POOL%\" -Name managedRuntimeVersion -Value \'\' }; Start-WebAppPool -Name \'%DEPT_POOL%\'"'
+                        bat 'powershell -Command "$ErrorActionPreference=\'SilentlyContinue\'; Import-Module WebAdministration; if (-not (Test-Path IIS:\\AppPools\\%DEPT_POOL%)) { New-WebAppPool \'%DEPT_POOL%\'; Set-ItemProperty IIS:\\AppPools\\%DEPT_POOL% managedRuntimeVersion \'\' }; Start-WebAppPool \'%DEPT_POOL%\'; exit 0"'
                     }
                 }
                 stage('Start EmployeService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; if (-not (Test-Path \"IIS:\\AppPools\\%EMP_POOL%\")) { New-WebAppPool -Name \'%EMP_POOL%\'; Set-ItemProperty \"IIS:\\AppPools\\%EMP_POOL%\" -Name managedRuntimeVersion -Value \'\' }; Start-WebAppPool -Name \'%EMP_POOL%\'"'
+                        bat 'powershell -Command "$ErrorActionPreference=\'SilentlyContinue\'; Import-Module WebAdministration; if (-not (Test-Path IIS:\\AppPools\\%EMP_POOL%)) { New-WebAppPool \'%EMP_POOL%\'; Set-ItemProperty IIS:\\AppPools\\%EMP_POOL% managedRuntimeVersion \'\' }; Start-WebAppPool \'%EMP_POOL%\'; exit 0"'
                     }
                 }
             }
