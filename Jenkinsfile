@@ -9,7 +9,7 @@ pipeline {
         DEPLOY_ROOT  = "C:\\inetpub\\wwwroot"
         DEPT_SERVICE = "DepartementService"
         DEPT_TESTS   = "DepartementService.Tests"
-        EMP_SERVICE  = "EmployeService"
+        EMP_SERVICE  = "EmployeServices"
         EMP_TESTS    = "EmployeService.Tests"
         DEPT_POOL    = "DepartementServicePool"
         EMP_POOL     = "EmployeServicePool"
@@ -80,12 +80,14 @@ pipeline {
             parallel {
                 stage('Stop DepartementService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%DEPT_POOL%\'; Start-Sleep -Seconds 3 } catch { Write-Host \'Pool %DEPT_POOL% not found - skipping stop\' }"'
+                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%DEPT_POOL%\' } catch { Write-Host \'Pool %DEPT_POOL% not found - skipping stop\' }"'
+                        bat 'timeout /t 3 /nobreak >nul'
                     }
                 }
                 stage('Stop EmployeService Pool') {
                     steps {
-                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%EMP_POOL%\'; Start-Sleep -Seconds 3 } catch { Write-Host \'Pool %EMP_POOL% not found - skipping stop\' }"'
+                        bat 'powershell -Command "Import-Module WebAdministration; try { Stop-WebAppPool -Name \'%EMP_POOL%\' } catch { Write-Host \'Pool %EMP_POOL% not found - skipping stop\' }"'
+                        bat 'timeout /t 3 /nobreak >nul'
                     }
                 }
             }
