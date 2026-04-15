@@ -10,6 +10,7 @@ services:
       - "5001:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_PATHBASE=/DepartementService
       - ConnectionStrings__MyConnection=Server=10.200.0.222,1433;Database=DepartmentDB;User Id=outmane.elkairi;Password=outmane.elkairi@;TrustServerCertificate=True;
     restart: always
     networks:
@@ -25,6 +26,7 @@ services:
       - "5002:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_PATHBASE=/EmployeService
       - ConnectionStrings__MyConnection=Server=10.200.0.222,1433;Database=EmployeeDB;User Id=outmane.elkairi;Password=outmane.elkairi@;TrustServerCertificate=True;
       - DepartmentServiceUrl=http://departementservice:8080
     depends_on:

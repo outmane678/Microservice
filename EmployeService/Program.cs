@@ -51,8 +51,12 @@ builder.Services.AddRefitClient<IDepartmentAPI>()
 
 var app = builder.Build();
 
+var pathBase = app.Configuration["ASPNETCORE_PATHBASE"];
+if (!string.IsNullOrEmpty(pathBase))
+{
+    app.UsePathBase(pathBase);
+}
 
-// Swagger : Development, ou Production si EnableSwagger=true (tests / déploiement interne).
 var enableSwagger = app.Environment.IsDevelopment()
     || app.Configuration.GetValue<bool>("EnableSwagger");
 if (enableSwagger)
