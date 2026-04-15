@@ -100,6 +100,7 @@ pipeline {
         stage('Deploy with Docker Compose') {
             steps {
                 bat 'docker-compose down --remove-orphans 2>nul || exit /b 0'
+                bat 'docker rm -f departementservice employeservice nginx-proxy 2>nul || exit /b 0'
                 bat 'docker-compose up -d'
                 bat 'ping -n 6 127.0.0.1 >nul'
                 bat 'curl -f http://localhost:9090/DepartementService/weatherforecast || exit /b 1'
