@@ -84,11 +84,11 @@ pipeline {
         stage('Docker Test') {
             steps {
                 bat 'docker rm -f %DEPT_IMAGE%-test %EMP_IMAGE%-test 2>nul || exit /b 0'
-                bat "docker run -d --name %DEPT_IMAGE%-test -p 5001:8080 %DEPT_IMAGE%:latest"
-                bat "docker run -d --name %EMP_IMAGE%-test -p 5002:8080 %EMP_IMAGE%:latest"
+                bat "docker run -d --name %DEPT_IMAGE%-test -p 6001:8080 %DEPT_IMAGE%:latest"
+                bat "docker run -d --name %EMP_IMAGE%-test -p 6002:8080 %EMP_IMAGE%:latest"
                 bat 'ping -n 6 127.0.0.1 >nul'
-                bat 'curl -f http://localhost:5001/weatherforecast || exit /b 1'
-                bat 'curl -f http://localhost:5002/weatherforecast || exit /b 1'
+                bat 'curl -f http://localhost:6001/weatherforecast || exit /b 1'
+                bat 'curl -f http://localhost:6002/weatherforecast || exit /b 1'
                 echo 'Both containers responded HTTP 200.'
                 bat 'docker stop %DEPT_IMAGE%-test %EMP_IMAGE%-test 2>nul || exit /b 0'
                 bat 'docker rm %DEPT_IMAGE%-test %EMP_IMAGE%-test 2>nul || exit /b 0'
