@@ -1,5 +1,6 @@
 using DepartementService.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using DepartementService.Services.Interfaces;
 using DepartementService.Services.Implementations; 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +28,20 @@ var enableSwagger = app.Environment.IsDevelopment()
     || app.Configuration.GetValue<bool>("EnableSwagger");
 if (enableSwagger)
 {
-    app.UseSwagger();
+    app.UseSwagger(c =>
+    {
+        c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+        {
+            var basePath = httpReq.PathBase.Value;
+            if (!string.IsNullOrEmpty(basePath))
+            {
+                swaggerDoc.Servers = new List<OpenApiServer>
+                {
+                    new OpenApiServer { Url = basePath }
+                };
+            }
+        });
+    });
     app.UseSwaggerUI();
 }
 
