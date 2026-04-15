@@ -64,17 +64,16 @@ if (enableSwagger)
 {
     app.UseSwagger(c =>
     {
-        c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+        if (!string.IsNullOrEmpty(pathBase))
         {
-            var basePath = httpReq.PathBase.Value;
-            if (!string.IsNullOrEmpty(basePath))
+            c.PreSerializeFilters.Add((swaggerDoc, _) =>
             {
                 swaggerDoc.Servers = new List<OpenApiServer>
                 {
-                    new OpenApiServer { Url = basePath }
+                    new OpenApiServer { Url = pathBase }
                 };
-            }
-        });
+            });
+        }
     });
     app.UseSwaggerUI();
 }
