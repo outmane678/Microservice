@@ -1,0 +1,52 @@
+services:
+
+  departementservice:
+    build:
+      context: .
+      dockerfile: DepartementService/Dockerfile
+    image: departementservice:latest
+    container_name: departementservice
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__MyConnection=Server=10.200.0.222,1433;Database=DepartmentDB;User Id=outmane.elkairi;Password=outmane.elkairi@;TrustServerCertificate=True;
+    restart: always
+    networks:
+      - microservices-net
+
+  employeservice:
+    build:
+      context: .
+      dockerfile: EmployeService/Dockerfile
+    image: employeservice:latest
+    container_name: employeservice
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__MyConnection=Server=10.200.0.222,1433;Database=EmployeeDB;User Id=outmane.elkairi;Password=outmane.elkairi@;TrustServerCertificate=True;
+      - DepartmentServiceUrl=http://departementservice:8080
+    depends_on:
+      - departementservice
+    restart: always
+    networks:
+      - microservices-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "9090:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - departementservice
+      - employeservice
+    restart: always
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
