@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/publish/
+**/.vs/
+**/TestResults/
+**/*.user
+**/*.suo
+.git
+.gitignore
+*.md
+Jenkinsfile
+**/*.Tests/
